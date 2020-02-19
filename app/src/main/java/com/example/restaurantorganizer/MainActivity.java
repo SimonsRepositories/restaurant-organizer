@@ -1,5 +1,6 @@
 package com.example.restaurantorganizer;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.restaurantorganizer.model.Seat;
 import com.example.restaurantorganizer.model.Table;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -22,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView seatsLeftRecyclerView;
     private RecyclerView seatsRightRecyclerView;
 
-    private final List<Seat> seats = Arrays.asList(new Seat(1L), new Seat(2L), new Seat(3L), new Seat(4L), new Seat(5L));
+    private final List<Seat> seats = Arrays.asList(new Seat(1L, new ArrayList<>()), new Seat(2L,  new ArrayList<>()), new Seat(3L,  new ArrayList<>()), new Seat(4L,  new ArrayList<>()), new Seat(5L,  new ArrayList<>()));
 
     private final Table scannedTable = new Table(1L, "Tisch 1", seats);
 
@@ -58,6 +60,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void onSeatClick(View v, Seat seat) {
         seat.getId();
+        Intent intent = new Intent(this, MenuSelectionActivitiy.class);
+        startActivity(intent);
     }
 
 }

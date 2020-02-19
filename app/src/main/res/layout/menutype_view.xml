@@ -3,7 +3,7 @@
     android:orientation="vertical"
     android:layout_width="70dp"
     android:layout_height="50dp"
-    android:background="#ffffff"
+    android:background="#fafafa"
     android:clickable="true"
     android:text=""
     android:layout_marginBottom="20dp"
@@ -20,7 +20,7 @@
     </View>
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/mytextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="category"
