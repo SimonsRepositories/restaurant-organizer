@@ -6,5 +6,5 @@
     android:background="#ff0000"
     android:clickable="true"
     android:text=""
-    android:layout_marginBottom="30dp">
+    android:layout_marginVertical="20dp">
 </View>

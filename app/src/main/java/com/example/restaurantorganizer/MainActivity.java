@@ -15,6 +15,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private RecyclerView seatsLeftRecyclerView;
+    private RecyclerView seatsRightRecyclerView;
 
     private final List<Seat> seats = Arrays.asList(new Seat(1), new Seat(2), new Seat(3));
 
@@ -29,17 +30,28 @@ public class MainActivity extends AppCompatActivity {
 
 
         seatsLeftRecyclerView = findViewById(R.id.seatsLeft);
+        SeatAdapter seatsLeftAdapter = setupSeatRecyclerView(seatsLeftRecyclerView, seats);
+        seatsRightRecyclerView = findViewById(R.id.seatsRight);
+        SeatAdapter seatsRightAdapter = setupSeatRecyclerView(seatsRightRecyclerView, seats);
+
+        seatsRightAdapter.setClickListener((v, position) -> {
+
+        });
+
+        seatsLeftAdapter.setClickListener((v, position) -> {
+
+        });
+
+
+
+    }
+
+    private SeatAdapter setupSeatRecyclerView(RecyclerView recyclerView, List<Seat> seats) {
         SeatAdapter seatsLeftAdapter = new SeatAdapter(this, seats);
-
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-        seatsLeftRecyclerView.setLayoutManager(layoutManager);
-
-
-        seatsLeftRecyclerView.setAdapter(seatsLeftAdapter);
-
-
-
-
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(seatsLeftAdapter);
+        return (SeatAdapter) recyclerView.getAdapter();
     }
 
 }
