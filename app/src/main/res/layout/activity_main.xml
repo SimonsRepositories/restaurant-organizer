@@ -26,10 +26,19 @@
         </RelativeLayout>
     </androidx.appcompat.widget.Toolbar>
 
+    <TextView
+        android:id="@+id/tableHeader"
+        android:layout_marginTop="30dp"
+        android:textSize="25dp"
+        android:text="@string/please_scan_a_table"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingHorizontal="50dp"
+        android:paddingHorizontal="25dp"
         android:orientation="vertical">
 
         <LinearLayout

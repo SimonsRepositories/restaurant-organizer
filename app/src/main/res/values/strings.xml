@@ -3,4 +3,5 @@
     <string name="title_activity_main">MainActivity</string>
     <string name="orders">Orders</string>
     <string name="scan_table">Scan Table</string>
+    <string name="please_scan_a_table">Please scan a table</string>
 </resources>
