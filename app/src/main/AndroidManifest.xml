@@ -39,5 +39,6 @@
                     android:host="restaurant" />
             </intent-filter>
         </activity>
+        <activity android:name=".OrderOverviewActivity" />
     </application>
 </manifest>
