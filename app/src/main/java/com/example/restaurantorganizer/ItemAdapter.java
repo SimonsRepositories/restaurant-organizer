@@ -7,38 +7,38 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.example.restaurantorganizer.model.Menutype;
+import com.example.restaurantorganizer.model.Item;
 
 import org.w3c.dom.Text;
 
 import java.util.List;
 
-public class MenutypeAdapter extends RecyclerView.Adapter<MenutypeAdapter.ViewHolder>
+public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder>
 {
-    private List<Menutype> mData;
+    private List<Item> mData;
     private LayoutInflater mInflater;
-    private MenutypeAdapter.ItemClickListener mClickListener;
+    private ItemAdapter.ItemClickListener mClickListener;
 
     // data is passed into the constructor
-    MenutypeAdapter(Context context, List<Menutype> data) {
+    ItemAdapter(Context context, List<Item> data) {
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
     }
 
     // inflates the row layout from xml when needed
     @Override
-    public MenutypeAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.menutype_view, parent, false);
-        return new MenutypeAdapter.ViewHolder(view);
+    public ItemAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = mInflater.inflate(R.layout.item_view, parent, false);
+        return new ItemAdapter.ViewHolder(view);
     }
 
     // binds the data to the TextView in each row
     @Override
-    public void onBindViewHolder(MenutypeAdapter.ViewHolder holder, int position) {
-        Menutype menuType = mData.get(position);
+    public void onBindViewHolder(ItemAdapter.ViewHolder holder, int position) {
+        Item item = mData.get(position);
 
-        holder.tv_menutype.setText(mData.get(position).getName());
+        holder.tv_item.setText(mData.get(position).getTitle());
+        holder.tv_ingredients.setText(mData.get(position).getIngredients());
     }
 
     // total number of rows
@@ -47,17 +47,20 @@ public class MenutypeAdapter extends RecyclerView.Adapter<MenutypeAdapter.ViewHo
         return mData.size();
     }
 
+
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        View menuTypeView;
+        View myitemView;
 
-        TextView tv_menutype;
+        TextView tv_item;
+        TextView tv_ingredients;
 
         ViewHolder(View itemView) {
             super(itemView);
-            menuTypeView = itemView;
+            myitemView = itemView;
 
-            tv_menutype = (TextView) itemView.findViewById(R.id.tv_menutype);
+            tv_item = (TextView) itemView.findViewById(R.id.tv_item);
+            tv_ingredients = (TextView) itemView.findViewById(R.id.tv_ingredients);
             itemView.setOnClickListener(this);
         }
 
@@ -68,12 +71,12 @@ public class MenutypeAdapter extends RecyclerView.Adapter<MenutypeAdapter.ViewHo
     }
 
     // convenience method for getting data at click position
-    Menutype getItem(int id) {
+    Item getItem(int id) {
         return mData.get(id);
     }
 
     // allows clicks events to be caught
-    void setClickListener(MenutypeAdapter.ItemClickListener itemClickListener) {
+    void setClickListener(ItemAdapter.ItemClickListener itemClickListener) {
         this.mClickListener = itemClickListener;
     }
 
