@@ -36,7 +36,7 @@ public class OrderOverviewAdapter extends RecyclerView.Adapter<OrderOverviewAdap
     public void onBindViewHolder(OrderOverviewAdapter.ViewHolder holder, int position) {
         OrderItem orderItem = mData.get(position);
 
-        holder.tv_orderItem.setText(mData.get(position).getItem().getTitle());
+        holder.tv_orderItem.setText(mData.get(position).getMenu().getName());
     }
 
     // total number of rows
