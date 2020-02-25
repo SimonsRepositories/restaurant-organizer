@@ -1,4 +1,4 @@
-package com.example.restaurantorganizer;
+package com.example.restaurantorganizer.service;
 
 import android.content.Context;
 import android.content.SharedPreferences;
