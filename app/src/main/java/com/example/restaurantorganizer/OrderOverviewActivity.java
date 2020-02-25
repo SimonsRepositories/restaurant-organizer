@@ -17,7 +17,6 @@ import com.example.restaurantorganizer.service.OrderService;
 
 public class OrderOverviewActivity extends AppCompatActivity {
 
-    Button backBtn;
     Button deleteBtn;
     private RecyclerView allOrderedItems;
     OrderService os;
@@ -27,14 +26,6 @@ public class OrderOverviewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.order_overview_activity);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        backBtn = findViewById(R.id.backBtn);
-
-        backBtn.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                startActivity(new Intent(OrderOverviewActivity.this, MainActivity.class));
-            }
-        });
 
         deleteBtn = findViewById(R.id.deleteItem);
         allOrderedItems = findViewById(R.id.allOrderedItems);
