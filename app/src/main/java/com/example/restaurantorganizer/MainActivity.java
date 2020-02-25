@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.restaurantorganizer.model.Seat;
 import com.example.restaurantorganizer.model.Table;
+import com.example.restaurantorganizer.service.TableService;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
     private final List<Seat> seats = Arrays.asList(new Seat(1L, new ArrayList<>()), new Seat(2L,  new ArrayList<>()), new Seat(3L,  new ArrayList<>()), new Seat(4L,  new ArrayList<>()), new Seat(5L,  new ArrayList<>()));
 
-    private final Table scannedTable = new Table(1L, "Tisch 1", seats);
+    private Table scannedTable;
 
     private NfcAdapter nfcAdapter;
     private Button scanButton;
@@ -51,6 +52,11 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
 
+        TableService tableService = new TableService(this);
+        scannedTable = tableService.getTableById(1L);
+
+        System.out.println(scannedTable);
+
         tableHeader = findViewById(R.id.tableHeader);
         tableHeader.setText(scannedTable.getName());
 
@@ -67,11 +73,6 @@ public class MainActivity extends AppCompatActivity {
             System.out.println("click");
         });
 
-//        nfcAdapter = NfcAdapter.getDefaultAdapter(this);
-//
-//        if (nfcAdapter.isEnabled()) {
-//            System.out.println("NFC enabled");
-//        }
 
 
     }
