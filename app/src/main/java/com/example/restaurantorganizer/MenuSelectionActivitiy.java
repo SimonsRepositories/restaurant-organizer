@@ -1,22 +1,16 @@
 package com.example.restaurantorganizer;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.restaurantorganizer.model.Item;
-import com.example.restaurantorganizer.model.Menu;
 import com.example.restaurantorganizer.model.Menutype;
-import com.example.restaurantorganizer.model.Seat;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
