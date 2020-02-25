@@ -4,4 +4,8 @@
     <string name="orders">Orders</string>
     <string name="scan_table">Scan Table</string>
     <string name="please_scan_a_table">Please scan a table</string>
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
+    <string name="alertmsg">Shake detected! Are you sure you want to delete all orders from this person?</string>
+    <string name="alerttitle">Unselect all orders</string>
 </resources>
