@@ -3,11 +3,9 @@ package com.example.restaurantorganizer;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,8 +25,7 @@ import java.util.List;
 
 public class MenuSelectionActivitiy extends AppCompatActivity {
 
-    public Seat seat;
-    public List<Seat> kitchenOutput;
+    OrderService os = new OrderService(this);
 
     private final List<Item> pizzaItems = Arrays.asList(
             new Item(1, "Napoli", "Sardellen"),
@@ -94,9 +91,6 @@ public class MenuSelectionActivitiy extends AppCompatActivity {
 
         allItemsRecyclerView = findViewById(R.id.allItems);
         setupItemRecyclerView(allItemsRecyclerView, pizzaItems);
-
-        seat = new Seat(1, new ArrayList<OrderItem>());
-        kitchenOutput = new ArrayList<>();
     }
 
     private void setupMenuTypeRecyclerView(RecyclerView recyclerView) {
@@ -138,11 +132,8 @@ public class MenuSelectionActivitiy extends AppCompatActivity {
     private void onItemClick(View v, Item item) {
         int color = ((ColorDrawable)v.getBackground()).getColor();
         v.setBackgroundColor(Color.GREEN);
-        OrderItem orderItem = new OrderItem(1, item, 2, false);
-        seat.getOrderItems().add(orderItem);
+        OrderItem oi = new OrderItem(1, item, 2, false);
+        os.addOrderItem(oi);
 
-
-        //always add
-        kitchenOutput.add(seat);
     }
 }

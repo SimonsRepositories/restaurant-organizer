@@ -1,10 +1,14 @@
 package com.example.restaurantorganizer;
 
 import android.content.Intent;
+import android.nfc.NdefMessage;
+import android.nfc.NfcAdapter;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -31,10 +35,16 @@ public class MainActivity extends AppCompatActivity {
 
     private final Table scannedTable = new Table(1L, "Tisch 1", seats);
 
+    private NfcAdapter nfcAdapter;
+    private Button scanButton;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        System.out.println("on create");
+
         setContentView(R.layout.activity_main);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -50,6 +60,19 @@ public class MainActivity extends AppCompatActivity {
         List<Seat> seats = scannedTable.getSeats();
         setupSeatRecyclerView(seatsLeftRecyclerView, seats.subList(0, seats.size() /2 + (seats.size()%2))); // first half of seat list
         setupSeatRecyclerView(seatsRightRecyclerView, scannedTable.getSeats().subList(seats.size() /2 + (seats.size()%2), seats.size())); // second half of seat list
+
+
+        scanButton = findViewById(R.id.scanButton);
+        scanButton.setOnClickListener(v -> {
+            System.out.println("click");
+        });
+
+//        nfcAdapter = NfcAdapter.getDefaultAdapter(this);
+//
+//        if (nfcAdapter.isEnabled()) {
+//            System.out.println("NFC enabled");
+//        }
+
 
     }
 
@@ -70,6 +93,26 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        System.out.println("new Intent");
+        if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(intent.getAction())) {
+            Parcelable[] rawMessages =
+                    intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);
+            if (rawMessages != null) {
+                NdefMessage[] messages = new NdefMessage[rawMessages.length];
+                for (int i = 0; i < rawMessages.length; i++) {
+                    messages[i] = (NdefMessage) rawMessages[i];
+                }
+                // Process the messages array.
+                System.out.println(Arrays.toString(messages));
+            }
+        }
+
+
+    }
+
     private void setupSeatRecyclerView(RecyclerView recyclerView, List<Seat> seats) {
         SeatAdapter seatAdapter = new SeatAdapter(this, seats);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
@@ -83,5 +126,6 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MenuSelectionActivitiy.class);
         startActivity(intent);
     }
+
 
 }
