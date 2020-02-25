@@ -13,7 +13,4 @@ public class Seat {
 
     private long id;
     private List<OrderItem> orderItems = new ArrayList<>();
-
-
-
 }

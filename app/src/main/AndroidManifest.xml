@@ -39,6 +39,11 @@
                     android:host="restaurant" />
             </intent-filter>
         </activity>
-        <activity android:name=".OrderOverviewActivity" />
+
+
+        <activity
+            android:name=".OrderOverviewActivity"
+            android:parentActivityName=".MainActivity"
+            />
     </application>
 </manifest>

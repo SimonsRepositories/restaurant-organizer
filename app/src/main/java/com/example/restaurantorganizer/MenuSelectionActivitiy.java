@@ -1,9 +1,13 @@
 package com.example.restaurantorganizer;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.restaurantorganizer.model.Item;
 import com.example.restaurantorganizer.model.Menu;
 import com.example.restaurantorganizer.model.Menutype;
+import com.example.restaurantorganizer.model.OrderItem;
 import com.example.restaurantorganizer.model.Seat;
 
 import java.util.ArrayList;
@@ -21,6 +26,9 @@ import java.util.Arrays;
 import java.util.List;
 
 public class MenuSelectionActivitiy extends AppCompatActivity {
+
+    public Seat seat;
+    public List<Seat> kitchenOutput;
 
     private final List<Item> pizzaItems = Arrays.asList(
             new Item(1, "Napoli", "Sardellen"),
@@ -86,6 +94,9 @@ public class MenuSelectionActivitiy extends AppCompatActivity {
 
         allItemsRecyclerView = findViewById(R.id.allItems);
         setupItemRecyclerView(allItemsRecyclerView, pizzaItems);
+
+        seat = new Seat(1, new ArrayList<OrderItem>());
+        kitchenOutput = new ArrayList<>();
     }
 
     private void setupMenuTypeRecyclerView(RecyclerView recyclerView) {
@@ -100,6 +111,7 @@ public class MenuSelectionActivitiy extends AppCompatActivity {
         ItemAdapter itemAdapter = new ItemAdapter(this, items);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
         recyclerView.setAdapter(itemAdapter);
+        itemAdapter.setClickListener((v, position) -> onItemClick(v, itemAdapter.getItem(position)));
     }
 
     private void onMenuTypeClick(View v, Menutype menutype) {
@@ -123,4 +135,14 @@ public class MenuSelectionActivitiy extends AppCompatActivity {
         }
     }
 
+    private void onItemClick(View v, Item item) {
+        int color = ((ColorDrawable)v.getBackground()).getColor();
+        v.setBackgroundColor(Color.GREEN);
+        OrderItem orderItem = new OrderItem(1, item, 2, false);
+        seat.getOrderItems().add(orderItem);
+
+
+        //always add
+        kitchenOutput.add(seat);
+    }
 }
