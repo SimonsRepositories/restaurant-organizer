@@ -17,6 +17,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.restaurantorganizer.adapter.MenuSelectionActivitiy;
+import com.example.restaurantorganizer.adapter.SeatAdapter;
 import com.example.restaurantorganizer.model.Seat;
 import com.example.restaurantorganizer.model.Table;
 import com.example.restaurantorganizer.service.TableService;
@@ -35,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private final List<Seat> seats = Arrays.asList(new Seat(1L, new ArrayList<>()), new Seat(2L,  new ArrayList<>()), new Seat(3L,  new ArrayList<>()), new Seat(4L,  new ArrayList<>()), new Seat(5L,  new ArrayList<>()));
 
     private Table scannedTable;
+    private TableService tableService;
 
     private NfcAdapter nfcAdapter;
     private Button scanButton;
@@ -52,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
 
-        TableService tableService = new TableService(this);
+        tableService = new TableService(getSharedPreferences("TABLES", MODE_PRIVATE));
         scannedTable = tableService.getTableById(1L);
 
         System.out.println(scannedTable);
@@ -73,8 +76,12 @@ public class MainActivity extends AppCompatActivity {
             System.out.println("click");
         });
 
+    }
 
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        scannedTable = tableService.getTableById(1L);
     }
 
     @Override
@@ -125,6 +132,8 @@ public class MainActivity extends AppCompatActivity {
     private void onSeatClick(View v, Seat seat) {
         seat.getId();
         Intent intent = new Intent(this, MenuSelectionActivitiy.class);
+        intent.putExtra("SEAT", scannedTable.getSeats().stream().filter(s -> s.getId() == seat.getId()).findFirst().orElse(null));
+        intent.putExtra("TABLE_ID", scannedTable.getId());
         startActivity(intent);
     }
 

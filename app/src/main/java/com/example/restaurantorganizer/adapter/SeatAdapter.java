@@ -1,4 +1,4 @@
-package com.example.restaurantorganizer;
+package com.example.restaurantorganizer.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.restaurantorganizer.R;
 import com.example.restaurantorganizer.model.Seat;
 
 import java.util.List;
@@ -18,7 +19,7 @@ public class SeatAdapter extends RecyclerView.Adapter<SeatAdapter.ViewHolder> {
     private ItemClickListener mClickListener;
 
     // data is passed into the constructor
-    SeatAdapter(Context context, List<Seat> data) {
+    public SeatAdapter(Context context, List<Seat> data) {
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
     }
@@ -60,12 +61,12 @@ public class SeatAdapter extends RecyclerView.Adapter<SeatAdapter.ViewHolder> {
     }
 
     // convenience method for getting data at click position
-    Seat getItem(int id) {
+    public Seat getItem(int id) {
         return mData.get(id);
     }
 
     // allows clicks events to be caught
-    void setClickListener(ItemClickListener itemClickListener) {
+    public void setClickListener(ItemClickListener itemClickListener) {
         this.mClickListener = itemClickListener;
     }
 

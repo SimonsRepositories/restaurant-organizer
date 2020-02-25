@@ -1,4 +1,4 @@
-package com.example.restaurantorganizer;
+package com.example.restaurantorganizer.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,9 +8,8 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.restaurantorganizer.R;
 import com.example.restaurantorganizer.model.Menutype;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 

@@ -1,10 +1,10 @@
 package com.example.restaurantorganizer.service;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.example.restaurantorganizer.dummy.DummySeats;
 import com.example.restaurantorganizer.model.OrderItem;
+import com.example.restaurantorganizer.model.Seat;
 import com.example.restaurantorganizer.model.Table;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -18,8 +18,8 @@ import static java.util.stream.Collectors.toList;
 
 public class TableService {
 
-    public TableService(Context context) {
-        this.mPrefs = context.getSharedPreferences("orderItems", Context.MODE_PRIVATE);
+    public TableService(SharedPreferences sharedPreferences) {
+        mPrefs = sharedPreferences;
         if (getTables().size() == 0) {
             tables = Arrays.asList(
                     new Table(1L, "Table 1", DummySeats.SEATS1),
@@ -57,6 +57,14 @@ public class TableService {
         Table table = getTableById(updateTable.getId());
         table.setName(updateTable.getName());
         table.setSeats(updateTable.getSeats());
+        writeTables();
+    }
+
+    public void updateSeat(Seat updateSeat, long tableId) {
+        Table table = getTableById(tableId);
+        Seat seat = table.getSeats().stream().filter(s -> s.getId() == updateSeat.getId()).findFirst().orElse(null);
+        seat.getOrderItems().clear();
+        seat.getOrderItems().addAll(updateSeat.getOrderItems());
         writeTables();
     }
 
