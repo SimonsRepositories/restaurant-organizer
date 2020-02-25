@@ -1,0 +1,65 @@
+package com.example.restaurantorganizer.service;
+
+import android.content.Context;
+import android.content.SharedPreferences;
+
+import com.example.restaurantorganizer.dummy.DummySeats;
+import com.example.restaurantorganizer.model.Table;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+public class TableService {
+
+    public TableService(Context context) {
+        this.mPrefs = context.getSharedPreferences("orderItems", Context.MODE_PRIVATE);
+        if (getTables().size() == 0) {
+            tables = Arrays.asList(
+                    new Table(1L, "Table 1", DummySeats.SEATS1),
+                    new Table(2L, "Table 2", DummySeats.SEATS2),
+                    new Table(3L, "Table 3", DummySeats.SEATS3),
+                    new Table(4L, "Table 4", DummySeats.SEATS4)
+            );
+            writeTables();
+        }
+    }
+
+    private SharedPreferences mPrefs;
+
+    private List<Table> tables = new ArrayList<>();
+
+    private void writeTables() {
+        SharedPreferences.Editor prefsEditor = mPrefs.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(tables);
+        prefsEditor.putString("TABLES", json);
+        prefsEditor.apply();
+    }
+
+    private void readTables() {
+        String json = mPrefs.getString("TABLES", "[]");
+        Type listType = new TypeToken<ArrayList<Table>>(){}.getType();
+        tables = new Gson().fromJson(json, listType);
+    }
+
+    public Table getTableById(long id) {
+        return getTables().stream().filter(table -> table.getId() == id).findFirst().orElse(null);
+    }
+
+    public void updateTable(Table updateTable) {
+        Table table = getTableById(updateTable.getId());
+        table.setName(updateTable.getName());
+        table.setSeats(updateTable.getSeats());
+        writeTables();
+    }
+
+    public List<Table> getTables() {
+        readTables();
+        return tables;
+    }
+
+}
