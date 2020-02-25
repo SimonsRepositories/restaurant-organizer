@@ -1,5 +1,6 @@
 package com.example.restaurantorganizer;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -14,12 +15,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.restaurantorganizer.model.OrderItem;
 import com.example.restaurantorganizer.service.OrderService;
+import com.example.restaurantorganizer.service.TableService;
 
 public class OrderOverviewActivity extends AppCompatActivity {
 
     Button deleteBtn;
     private RecyclerView allOrderedItems;
-    OrderService os;
+    TableService tableService;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -29,14 +31,15 @@ public class OrderOverviewActivity extends AppCompatActivity {
 
         deleteBtn = findViewById(R.id.deleteItem);
         allOrderedItems = findViewById(R.id.allOrderedItems);
-        os = new OrderService(this);
-
+        tableService = new TableService(getSharedPreferences("TABLES", Context.MODE_PRIVATE));
+        setupAllOrderedItems(allOrderedItems);
+        System.out.println(tableService.getAllOrderItems());
     }
 
     //Kitchen Output
     private void setupAllOrderedItems(RecyclerView recyclerView) {
-        OrderOverviewAdapter orderOverviewAdapter = new OrderOverviewAdapter(this, os.getOrderItems());
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true);
+        OrderOverviewAdapter orderOverviewAdapter = new OrderOverviewAdapter(this, tableService.getAllOrderItems());
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(orderOverviewAdapter);
 
@@ -44,9 +47,7 @@ public class OrderOverviewActivity extends AppCompatActivity {
     }
 
     private void onOrderedItemClick(View v, OrderItem orderItem) {
-        OrderService os = new OrderService(this);
-        //delete item from list
-        os.getOrderItems().remove(orderItem);
+        tableService.getAllOrderItems().clear();
         //update view
         setupAllOrderedItems(allOrderedItems);
     }

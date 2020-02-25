@@ -136,6 +136,4 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("TABLE_ID", scannedTable.getId());
         startActivity(intent);
     }
-
-
 }

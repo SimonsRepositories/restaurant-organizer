@@ -1,6 +1,10 @@
 package com.example.restaurantorganizer.adapter;
 
 import android.content.Context;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.view.View;
 
@@ -10,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.restaurantorganizer.R;
+import com.example.restaurantorganizer.ShakeDetectedDialog;
 import com.example.restaurantorganizer.model.Menu;
 import com.example.restaurantorganizer.model.Menutype;
 import com.example.restaurantorganizer.model.OrderItem;
@@ -23,6 +28,11 @@ import java.util.List;
 public class MenuSelectionActivitiy extends AppCompatActivity {
 
     TableService tableService;
+
+    private SensorManager sm;
+    private float accelVal; //current acceleration value and gravity
+    private float accelLast;  //last acceleration value and gravity
+    private float shake;      //acceleration value differ from gravity
 
     Seat selectedSeat;
     long tableId;
@@ -107,7 +117,39 @@ public class MenuSelectionActivitiy extends AppCompatActivity {
 
         tableService = new TableService(getSharedPreferences("TABLES", Context.MODE_PRIVATE));
 
+
+        //setting up sensors
+        sm = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        sm.registerListener(sensorEventListener, sm.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
+
+        accelVal = SensorManager.GRAVITY_EARTH;
+        accelLast = SensorManager.GRAVITY_EARTH;
+        shake = 0.00f;
     }
+
+    private final SensorEventListener sensorEventListener = new SensorEventListener() {
+        @Override
+        public void onSensorChanged(SensorEvent event) {
+            float x = event.values[0];
+            float y = event.values[1];
+            float z = event.values[2];
+
+            accelLast = accelVal;
+            accelVal = (float) Math.sqrt((double) (x*x + y*y + z*z));
+            float delta = accelVal - accelLast;
+            shake = shake * 0.9f + delta;
+
+            if(shake > 12) {
+                ShakeDetectedDialog sdd = new ShakeDetectedDialog();
+                sdd.show(getSupportFragmentManager(), "shake detected");
+            }
+        }
+
+        @Override
+        public void onAccuracyChanged(Sensor sensor, int accuracy) {
+            //placeholder
+        }
+    };
 
     @Override
     protected void onResume() {
