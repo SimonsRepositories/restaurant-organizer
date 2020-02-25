@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.restaurantorganizer.adapter.OrderOverviewAdapter;
 import com.example.restaurantorganizer.model.OrderItem;
 import com.example.restaurantorganizer.service.OrderService;
 

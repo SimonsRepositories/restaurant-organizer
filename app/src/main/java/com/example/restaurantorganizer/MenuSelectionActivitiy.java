@@ -1,4 +1,4 @@
-package com.example.restaurantorganizer.adapter;
+package com.example.restaurantorganizer;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -9,7 +9,8 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.restaurantorganizer.R;
+import com.example.restaurantorganizer.adapter.MenuAdapter;
+import com.example.restaurantorganizer.adapter.MenutypeAdapter;
 import com.example.restaurantorganizer.model.Menu;
 import com.example.restaurantorganizer.model.Menutype;
 import com.example.restaurantorganizer.model.OrderItem;

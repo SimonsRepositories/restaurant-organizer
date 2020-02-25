@@ -20,7 +20,7 @@ public class MenutypeAdapter extends RecyclerView.Adapter<MenutypeAdapter.ViewHo
     private MenutypeAdapter.ItemClickListener mClickListener;
 
     // data is passed into the constructor
-    MenutypeAdapter(Context context, List<Menutype> data) {
+    public MenutypeAdapter(Context context, List<Menutype> data) {
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
     }
@@ -67,12 +67,12 @@ public class MenutypeAdapter extends RecyclerView.Adapter<MenutypeAdapter.ViewHo
     }
 
     // convenience method for getting data at click position
-    Menutype getItem(int id) {
+    public Menutype getItem(int id) {
         return mData.get(id);
     }
 
     // allows clicks events to be caught
-    void setClickListener(MenutypeAdapter.ItemClickListener itemClickListener) {
+    public void setClickListener(MenutypeAdapter.ItemClickListener itemClickListener) {
         this.mClickListener = itemClickListener;
     }
 
