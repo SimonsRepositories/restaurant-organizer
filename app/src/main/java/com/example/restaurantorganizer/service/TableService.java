@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.example.restaurantorganizer.dummy.DummySeats;
+import com.example.restaurantorganizer.model.OrderItem;
 import com.example.restaurantorganizer.model.Table;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -12,6 +13,8 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import static java.util.stream.Collectors.toList;
 
 public class TableService {
 
@@ -60,6 +63,12 @@ public class TableService {
     public List<Table> getTables() {
         readTables();
         return tables;
+    }
+
+    public List<OrderItem> getAllOrderItems() {
+        return getTables().stream()
+                .flatMap(table -> table.getSeats().stream())
+                .flatMap(seat -> seat.getOrderItems().stream()).collect(toList());
     }
 
 }
