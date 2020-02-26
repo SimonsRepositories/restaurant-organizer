@@ -34,7 +34,7 @@ import com.example.restaurantorganizer.service.TableService;
 
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
@@ -48,8 +48,6 @@ public class MainActivity extends AppCompatActivity {
 
     ToggleButton tglReadWrite;
     EditText txtTagContent;
-
-    private final List<Seat> seats = Arrays.asList(new Seat(1L, new ArrayList<>()), new Seat(2L,  new ArrayList<>()), new Seat(3L,  new ArrayList<>()), new Seat(4L,  new ArrayList<>()), new Seat(5L,  new ArrayList<>()));
 
     private Table scannedTable;
     private TableService tableService;
@@ -83,8 +81,8 @@ public class MainActivity extends AppCompatActivity {
         //Setup NFC
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
 
-        tglReadWrite = (ToggleButton)findViewById(R.id.tglReadWrite);
-        txtTagContent = (EditText) findViewById(R.id.txtTagContent);
+        tglReadWrite = findViewById(R.id.tglReadWrite);
+        txtTagContent = findViewById(R.id.txtTagContent);
 
         if(nfcAdapter != null && nfcAdapter.isEnabled()) {
             Toast.makeText(this, "NFC available", Toast.LENGTH_LONG).show();
@@ -239,24 +237,19 @@ public class MainActivity extends AppCompatActivity {
 
 
     private NdefRecord createTextRecord(String content) {
-        try {
-            byte[] language;
-            language = Locale.getDefault().getLanguage().getBytes("UTF-8");
+        byte[] language;
+        language = Locale.getDefault().getLanguage().getBytes(StandardCharsets.UTF_8);
 
-            final byte[] text = content.getBytes("UTF-8");
-            final int languageSize = language.length;
-            final int textLength = text.length;
-            final ByteArrayOutputStream payload = new ByteArrayOutputStream(1 + languageSize + textLength);
+        final byte[] text = content.getBytes(StandardCharsets.UTF_8);
+        final int languageSize = language.length;
+        final int textLength = text.length;
+        final ByteArrayOutputStream payload = new ByteArrayOutputStream(1 + languageSize + textLength);
 
-            payload.write((byte) (languageSize & 0x1F));
-            payload.write(language, 0, languageSize);
-            payload.write(text, 0, textLength);
+        payload.write((byte) (languageSize & 0x1F));
+        payload.write(language, 0, languageSize);
+        payload.write(text, 0, textLength);
 
-            return new NdefRecord(NdefRecord.TNF_WELL_KNOWN, NdefRecord.RTD_TEXT, new byte[0], payload.toByteArray());
-        } catch (UnsupportedEncodingException e){
-            Log.e("createTextRecord", e.getMessage());
-        }
-        return null;
+        return new NdefRecord(NdefRecord.TNF_WELL_KNOWN, NdefRecord.RTD_TEXT, new byte[0], payload.toByteArray());
     }
 
     private NdefMessage createNdefMessage(String content) {
