@@ -81,11 +81,11 @@ public class MenuSelectionActivitiy extends AppCompatActivity {
     );
 
     private final List<Menutype> menutypes = Arrays.asList(
-            new Menutype(1, "Meat", pizzaItems),
+            new Menutype(1, "Meat", meatItems),
             new Menutype(2, "Fish", fishItems),
-            new Menutype(3, "Pasta", meatItems),
-            new Menutype(4, "Pizza", drinkItems),
-            new Menutype(5, "Drinks", pastaItems)
+            new Menutype(3, "Pasta", pastaItems),
+            new Menutype(4, "Pizza", pizzaItems),
+            new Menutype(5, "Drinks", drinkItems)
     );
 
     private RecyclerView allMenuTypesRecyclerView;
@@ -178,24 +178,7 @@ public class MenuSelectionActivitiy extends AppCompatActivity {
     }
 
     private void onMenuTypeClick(View v, Menutype menutype) {
-
-        switch (menutype.getName()) {
-            case "Pizza":
-                setupItemRecyclerView(allItemsRecyclerView, pizzaItems);
-                break;
-            case "Pasta":
-                setupItemRecyclerView(allItemsRecyclerView, pastaItems);
-                break;
-            case "Meat":
-                setupItemRecyclerView(allItemsRecyclerView, meatItems);
-                break;
-            case "Fish":
-                setupItemRecyclerView(allItemsRecyclerView, fishItems);
-                break;
-            case "Drinks":
-                setupItemRecyclerView(allItemsRecyclerView, drinkItems);
-                break;
-        }
+        setupItemRecyclerView(allItemsRecyclerView, menutype.getMenus());
     }
 
     private void onItemClick(View v, Menu item) {
