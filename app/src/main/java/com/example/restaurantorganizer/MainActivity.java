@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -69,9 +70,19 @@ public class MainActivity extends AppCompatActivity {
         setupSeatRecyclerView(seatsLeftRecyclerView, seats.subList(0, seats.size() /2 + (seats.size()%2))); // first half of seat list
         setupSeatRecyclerView(seatsRightRecyclerView, scannedTable.getSeats().subList(seats.size() /2 + (seats.size()%2), seats.size())); // second half of seat list
 
+        //Setup NFC
+        NfcAdapter nfcAdapter = NfcAdapter.getDefaultAdapter(this);
 
+        if(nfcAdapter != null && nfcAdapter.isEnabled()) {
+            Toast.makeText(this, "NFC available", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this, "NFC not available :(", Toast.LENGTH_SHORT).show();
+        }
+
+        if(nfcAdapter != null)
         scanButton = findViewById(R.id.scanButton);
         scanButton.setOnClickListener(v -> {
+
             System.out.println("click");
         });
 

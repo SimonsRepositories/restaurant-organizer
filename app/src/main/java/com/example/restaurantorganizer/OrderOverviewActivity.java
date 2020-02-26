@@ -20,7 +20,6 @@ import com.example.restaurantorganizer.service.TableService;
 
 public class OrderOverviewActivity extends AppCompatActivity {
 
-    Button deleteBtn;
     private RecyclerView allOrderedItems;
     TableService tableService;
 
@@ -30,7 +29,6 @@ public class OrderOverviewActivity extends AppCompatActivity {
         setContentView(R.layout.order_overview_activity);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        deleteBtn = findViewById(R.id.deleteItem);
         allOrderedItems = findViewById(R.id.allOrderedItems);
         tableService = new TableService(getSharedPreferences("TABLES", Context.MODE_PRIVATE));
         setupAllOrderedItems(allOrderedItems);

@@ -23,7 +23,7 @@
         android:layout_height="wrap_content">
 
         <Button
-            android:id="@+id/deleteItem"
+            android:id="@+id/btn_deleteItem"
             android:layout_width="59dp"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
