@@ -6,6 +6,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -94,6 +95,8 @@ public class MenuSelectionActivitiy extends AppCompatActivity {
     private MenutypeAdapter menutypeAdapter;
     private MenuAdapter menuAdapter;
 
+    private boolean shouldOpenDialog = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -131,9 +134,11 @@ public class MenuSelectionActivitiy extends AppCompatActivity {
             float delta = accelVal - accelLast;
             shake = shake * 0.9f + delta;
 
-            if (shake > 12) {
+            if (shake > 12 && shouldOpenDialog) {
                 ShakeDetectedDialog shakeDetectedDialog = new ShakeDetectedDialog(selectedSeat, menuAdapter, allItemsRecyclerView);
                 shakeDetectedDialog.show(getSupportFragmentManager(), "dialog");
+                shouldOpenDialog = false;
+                new Handler().postDelayed(() -> shouldOpenDialog = true, 2000);
             }
         }
 
