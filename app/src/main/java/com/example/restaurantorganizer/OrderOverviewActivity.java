@@ -15,13 +15,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.restaurantorganizer.adapter.OrderOverviewAdapter;
 import com.example.restaurantorganizer.model.OrderItem;
-import com.example.restaurantorganizer.service.OrderService;
 import com.example.restaurantorganizer.service.TableService;
 
 public class OrderOverviewActivity extends AppCompatActivity {
 
     Button deleteBtn;
-    private RecyclerView allOrderedItems;
+    private RecyclerView allOrderedItemsRecyclerView;
     TableService tableService;
 
     @Override
@@ -31,9 +30,9 @@ public class OrderOverviewActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         deleteBtn = findViewById(R.id.deleteItem);
-        allOrderedItems = findViewById(R.id.allOrderedItems);
+        allOrderedItemsRecyclerView = findViewById(R.id.allOrderedItems);
         tableService = new TableService(getSharedPreferences("TABLES", Context.MODE_PRIVATE));
-        setupAllOrderedItems(allOrderedItems);
+        setupAllOrderedItems(allOrderedItemsRecyclerView);
         System.out.println(tableService.getAllOrderItems());
     }
 
@@ -48,9 +47,11 @@ public class OrderOverviewActivity extends AppCompatActivity {
     }
 
     private void onOrderedItemClick(View v, OrderItem orderItem) {
-        tableService.getAllOrderItems().clear();
+        orderItem.setChecked(true);
+        tableService.setChecked(orderItem.getId());
+        setupAllOrderedItems(allOrderedItemsRecyclerView);
         //update view
-        setupAllOrderedItems(allOrderedItems);
+        setupAllOrderedItems(allOrderedItemsRecyclerView);
     }
 
     @Override

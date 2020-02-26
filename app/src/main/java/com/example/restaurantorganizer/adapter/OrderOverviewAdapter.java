@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -52,12 +53,15 @@ public class OrderOverviewAdapter extends RecyclerView.Adapter<OrderOverviewAdap
 
         TextView tv_orderItem;
 
+        Button deleteButton;
+
         ViewHolder(View itemView) {
             super(itemView);
             orderItemView = itemView;
 
             tv_orderItem = (TextView) itemView.findViewById(R.id.tv_orderItem);
-            itemView.setOnClickListener(this);
+            deleteButton = itemView.findViewById(R.id.deleteItem);
+            deleteButton.setOnClickListener(this);
         }
 
         @Override
