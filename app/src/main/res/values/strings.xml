@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">RestaurantOrganizer</string>
+    <string name="app_name">Restaurant Organizer</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="orders">Orders</string>
     <string name="scan_table">Scan Table</string>

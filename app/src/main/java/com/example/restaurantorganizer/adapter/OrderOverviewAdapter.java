@@ -1,4 +1,4 @@
-package com.example.restaurantorganizer;
+package com.example.restaurantorganizer.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.restaurantorganizer.R;
 import com.example.restaurantorganizer.model.OrderItem;
 
 import java.util.List;
@@ -19,7 +20,7 @@ public class OrderOverviewAdapter extends RecyclerView.Adapter<OrderOverviewAdap
     private OrderOverviewAdapter.ItemClickListener mClickListener;
 
     // data is passed into the constructor
-    OrderOverviewAdapter(Context context, List<OrderItem> data) {
+    public OrderOverviewAdapter(Context context, List<OrderItem> data) {
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
     }
@@ -66,12 +67,12 @@ public class OrderOverviewAdapter extends RecyclerView.Adapter<OrderOverviewAdap
     }
 
     // convenience method for getting data at click position
-    OrderItem getItem(int id) {
+    public OrderItem getItem(int id) {
         return mData.get(id);
     }
 
     // allows clicks events to be caught
-    void setClickListener(OrderOverviewAdapter.ItemClickListener itemClickListener) {
+    public void setClickListener(OrderOverviewAdapter.ItemClickListener itemClickListener) {
         this.mClickListener = itemClickListener;
     }
 

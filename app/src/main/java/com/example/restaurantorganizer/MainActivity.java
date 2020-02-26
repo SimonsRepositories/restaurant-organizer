@@ -17,7 +17,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.restaurantorganizer.adapter.MenuSelectionActivitiy;
 import com.example.restaurantorganizer.adapter.SeatAdapter;
 import com.example.restaurantorganizer.model.Seat;
 import com.example.restaurantorganizer.model.Table;

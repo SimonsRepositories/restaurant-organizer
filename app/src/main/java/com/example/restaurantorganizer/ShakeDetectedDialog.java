@@ -10,8 +10,10 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
+import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.restaurantorganizer.adapter.MenuSelectionActivitiy;
+import com.example.restaurantorganizer.adapter.MenuAdapter;
+import com.example.restaurantorganizer.model.Seat;
 import com.example.restaurantorganizer.service.TableService;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -20,6 +22,15 @@ import static android.content.Context.MODE_PRIVATE;
 public class ShakeDetectedDialog extends DialogFragment
 {
     TableService tableService;
+    Seat selectedSeat;
+    MenuAdapter menuAdapter;
+    RecyclerView allItemsRecyclerView;
+
+    public ShakeDetectedDialog(Seat selectedSeat, MenuAdapter menuAdapter, RecyclerView allItemsRecyclerView) {
+        this.selectedSeat = selectedSeat;
+        this.menuAdapter = menuAdapter;
+        this.allItemsRecyclerView = allItemsRecyclerView;
+    }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -31,7 +42,9 @@ public class ShakeDetectedDialog extends DialogFragment
                     public void onClick(DialogInterface dialog, int id) {
                         //remove the order (all selected items) of this person
                         tableService = new TableService(getContext().getSharedPreferences("TABLES", MODE_PRIVATE));
-                        tableService.getAllOrderItems().clear();
+                        selectedSeat.getOrderItems().clear();
+                        menuAdapter.setOrderItems(selectedSeat.getOrderItems());
+                        allItemsRecyclerView.setAdapter(menuAdapter);
                         dialog.dismiss();
                     }
                 })

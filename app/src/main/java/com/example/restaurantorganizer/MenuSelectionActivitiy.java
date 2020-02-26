@@ -1,6 +1,9 @@
-package com.example.restaurantorganizer.adapter;
+package com.example.restaurantorganizer;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -13,7 +16,8 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.restaurantorganizer.R;
+import com.example.restaurantorganizer.adapter.MenuAdapter;
+import com.example.restaurantorganizer.adapter.MenutypeAdapter;
 import com.example.restaurantorganizer.ShakeDetectedDialog;
 import com.example.restaurantorganizer.model.Menu;
 import com.example.restaurantorganizer.model.Menutype;
@@ -135,13 +139,13 @@ public class MenuSelectionActivitiy extends AppCompatActivity {
             float z = event.values[2];
 
             accelLast = accelVal;
-            accelVal = (float) Math.sqrt((double) (x*x + y*y + z*z));
+            accelVal = (float) Math.sqrt((double) (x * x + y * y + z * z));
             float delta = accelVal - accelLast;
             shake = shake * 0.9f + delta;
 
-            if(shake > 12) {
-                ShakeDetectedDialog sdd = new ShakeDetectedDialog();
-                sdd.show(getSupportFragmentManager(), "shake detected");
+            if (shake > 12) {
+                ShakeDetectedDialog shakeDetectedDialog = new ShakeDetectedDialog(selectedSeat, menuAdapter, allItemsRecyclerView);
+                shakeDetectedDialog.show(getSupportFragmentManager(), "dialog");
             }
         }
 
