@@ -64,5 +64,25 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:text="@string/scan_table"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ToggleButton
+                android:id="@+id/tglReadWrite"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textOn="Read"
+                android:textOff="Write"
+                android:checked="true"
+                android:onClick="tglReadWriteOnClick"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/txtTagContent"
+                android:layout_below="@+id/tglReadWrite"/>
+        </RelativeLayout>
     </LinearLayout>
 </LinearLayout>

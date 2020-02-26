@@ -68,6 +68,12 @@ public class TableService {
         writeTables();
     }
 
+    public void setChecked(long orderItemId) {
+        OrderItem orderItem = getAllOrderItems().stream().filter(oi -> oi.getId() == orderItemId).findFirst().orElse(null);
+        orderItem.setChecked(true);
+        writeTables();
+    }
+
     public List<Table> getTables() {
         readTables();
         return tables;
@@ -76,7 +82,8 @@ public class TableService {
     public List<OrderItem> getAllOrderItems() {
         return getTables().stream()
                 .flatMap(table -> table.getSeats().stream())
-                .flatMap(seat -> seat.getOrderItems().stream()).collect(toList());
+                .flatMap(seat -> seat.getOrderItems().stream())
+                .filter(orderItem -> !orderItem.isChecked()).collect(toList());
     }
 
 }

@@ -1,9 +1,6 @@
 package com.example.restaurantorganizer;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -18,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.restaurantorganizer.adapter.MenuAdapter;
 import com.example.restaurantorganizer.adapter.MenutypeAdapter;
-import com.example.restaurantorganizer.ShakeDetectedDialog;
 import com.example.restaurantorganizer.model.Menu;
 import com.example.restaurantorganizer.model.Menutype;
 import com.example.restaurantorganizer.model.OrderItem;
@@ -211,7 +207,7 @@ public class MenuSelectionActivitiy extends AppCompatActivity {
     }
 
     private void onItemClick(View v, Menu item) {
-        selectedSeat.getOrderItems().add(new OrderItem(123, item, 1, false));
+        selectedSeat.getOrderItems().add(new OrderItem((long) (Math.random() * 1000), item, 1, false));
         menuAdapter.setOrderItems(selectedSeat.getOrderItems());
         allItemsRecyclerView.setAdapter(menuAdapter);
     }
