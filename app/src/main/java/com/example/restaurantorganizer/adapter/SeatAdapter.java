@@ -1,6 +1,7 @@
 package com.example.restaurantorganizer.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +33,11 @@ public class SeatAdapter extends RecyclerView.Adapter<SeatAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Seat seat = mData.get(position);
+
+        if(seat.getOrderItems().size() > 0) {
+            holder.seatView.setBackgroundColor(Color.GREEN);
+        }
+
     }
 
     @Override

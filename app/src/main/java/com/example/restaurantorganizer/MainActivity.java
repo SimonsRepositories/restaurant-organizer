@@ -53,6 +53,15 @@ public class MainActivity extends AppCompatActivity {
         scannedTable = tableService.getTableById(1L);
 
         tableHeader = findViewById(R.id.tableHeader);
+
+        if (scannedTable != null) {
+            setupTable();
+        }
+        //Setup NFC
+        nfcAdapter = NfcAdapter.getDefaultAdapter(this);
+    }
+
+    private void setupTable() {
         tableHeader.setText(scannedTable.getName());
 
         seatsLeftRecyclerView = findViewById(R.id.seatsLeft);
@@ -60,9 +69,6 @@ public class MainActivity extends AppCompatActivity {
         List<Seat> seats = scannedTable.getSeats();
         setupSeatRecyclerView(seatsLeftRecyclerView, seats.subList(0, seats.size() / 2 + (seats.size() % 2))); // first half of seat list
         setupSeatRecyclerView(seatsRightRecyclerView, scannedTable.getSeats().subList(seats.size() / 2 + (seats.size() % 2), seats.size())); // second half of seat list
-
-        //Setup NFC
-        nfcAdapter = NfcAdapter.getDefaultAdapter(this);
     }
 
     @Override
@@ -87,9 +93,10 @@ public class MainActivity extends AppCompatActivity {
             NdefRecord ndefRecord = ndefRecords[0];
 
             String tagContent = getTextFromNdefRecord(ndefRecord);
+            Toast.makeText(this, tagContent, Toast.LENGTH_SHORT).show();
 
             scannedTable = tableService.getTableById(Long.parseLong(tagContent));
-
+            setupTable();
         } else {
             Toast.makeText(this, "No NDEF records found", Toast.LENGTH_LONG).show();
         }
@@ -119,10 +126,6 @@ public class MainActivity extends AppCompatActivity {
         IntentFilter[] intentFilter = new IntentFilter[]{};
 
         nfcAdapter.enableForegroundDispatch(this, pendingIntent, intentFilter, null);
-
-        scannedTable = tableService.getTableById(1L);
-
-        super.onResume();
     }
 
     @Override
@@ -132,12 +135,10 @@ public class MainActivity extends AppCompatActivity {
         super.onPause();
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
         return super.onCreateOptionsMenu(menu);
-
     }
 
     @Override

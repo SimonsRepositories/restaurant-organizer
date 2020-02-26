@@ -3,6 +3,7 @@ package com.example.restaurantorganizer;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.RecyclerView;
@@ -38,6 +39,7 @@ public class ShakeDetectedDialog extends DialogFragment {
                     menuAdapter.setOrderItems(selectedSeat.getOrderItems());
                     allItemsRecyclerView.setAdapter(menuAdapter);
                     dialog.dismiss();
+                    Toast.makeText(getContext(), "All item unselected", Toast.LENGTH_SHORT).show();
                 })
                 .setNegativeButton(R.string.cancel, (dialog, id) -> {
                     dialog.dismiss();

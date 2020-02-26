@@ -1,6 +1,7 @@
 package com.example.restaurantorganizer;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -106,10 +107,10 @@ public class MenuSelectionActivitiy extends AppCompatActivity {
         tableId = getIntent().getLongExtra("TABLE_ID", 0);
 
         allMenuTypesRecyclerView = findViewById(R.id.allMenutypes);
-        setupMenuTypeRecyclerView(allMenuTypesRecyclerView);
+        setupMenuTypeRecyclerView(allMenuTypesRecyclerView, menutypes.get(0));
 
         allItemsRecyclerView = findViewById(R.id.allItems);
-        setupItemRecyclerView(allItemsRecyclerView, pizzaItems);
+        setupItemRecyclerView(allItemsRecyclerView, meatItems);
 
         tableService = new TableService(getSharedPreferences("TABLES", Context.MODE_PRIVATE));
 
@@ -155,10 +156,10 @@ public class MenuSelectionActivitiy extends AppCompatActivity {
         tableId = getIntent().getLongExtra("TABLE_ID", 0);
 
         allMenuTypesRecyclerView = findViewById(R.id.allMenutypes);
-        setupMenuTypeRecyclerView(allMenuTypesRecyclerView);
+        setupMenuTypeRecyclerView(allMenuTypesRecyclerView, menutypes.get(0));
 
         allItemsRecyclerView = findViewById(R.id.allItems);
-        setupItemRecyclerView(allItemsRecyclerView, pizzaItems);
+        setupItemRecyclerView(allItemsRecyclerView, meatItems);
     }
 
     @Override
@@ -167,8 +168,8 @@ public class MenuSelectionActivitiy extends AppCompatActivity {
         tableService.updateSeat(selectedSeat, tableId);
     }
 
-    private void setupMenuTypeRecyclerView(RecyclerView recyclerView) {
-        menutypeAdapter = new MenutypeAdapter(this, menutypes);
+    private void setupMenuTypeRecyclerView(RecyclerView recyclerView, Menutype selectedMenutype) {
+        menutypeAdapter = new MenutypeAdapter(this, menutypes, selectedMenutype);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, true);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(menutypeAdapter);
@@ -184,6 +185,7 @@ public class MenuSelectionActivitiy extends AppCompatActivity {
 
     private void onMenuTypeClick(View v, Menutype menutype) {
         setupItemRecyclerView(allItemsRecyclerView, menutype.getMenus());
+        setupMenuTypeRecyclerView(allMenuTypesRecyclerView, menutype);
     }
 
     private void onItemClick(View v, Menu item) {

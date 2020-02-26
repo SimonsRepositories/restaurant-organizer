@@ -1,11 +1,13 @@
 package com.example.restaurantorganizer.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.restaurantorganizer.R;
@@ -18,10 +20,12 @@ public class MenutypeAdapter extends RecyclerView.Adapter<MenutypeAdapter.ViewHo
     private List<Menutype> mData;
     private LayoutInflater mInflater;
     private MenutypeAdapter.ItemClickListener mClickListener;
+    private Menutype selectedMenutype;
 
-    public MenutypeAdapter(Context context, List<Menutype> data) {
+    public MenutypeAdapter(Context context, List<Menutype> data, Menutype selectedMenutype) {
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
+        this.selectedMenutype = selectedMenutype;
     }
 
     @Override
@@ -35,6 +39,9 @@ public class MenutypeAdapter extends RecyclerView.Adapter<MenutypeAdapter.ViewHo
         Menutype menuType = mData.get(position);
 
         holder.tv_menutype.setText(mData.get(position).getName());
+        if(selectedMenutype.getId() == menuType.getId()) {
+            holder.card_menutype.setCardBackgroundColor(Color.GREEN);
+        }
     }
 
     @Override
@@ -46,12 +53,14 @@ public class MenutypeAdapter extends RecyclerView.Adapter<MenutypeAdapter.ViewHo
         View menuTypeView;
 
         TextView tv_menutype;
+        CardView card_menutype;
 
         ViewHolder(View itemView) {
             super(itemView);
             menuTypeView = itemView;
 
-            tv_menutype = (TextView) itemView.findViewById(R.id.tv_menutype);
+            tv_menutype = itemView.findViewById(R.id.tv_menutype);
+            card_menutype = itemView.findViewById(R.id.card_menutype);
             itemView.setOnClickListener(this);
         }
 
