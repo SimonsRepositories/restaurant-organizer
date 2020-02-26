@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 
 import androidx.annotation.NonNull;
@@ -19,9 +18,9 @@ import com.example.restaurantorganizer.service.TableService;
 
 public class OrderOverviewActivity extends AppCompatActivity {
 
-    Button deleteBtn;
+    private Button deleteBtn;
     private RecyclerView allOrderedItemsRecyclerView;
-    TableService tableService;
+    private TableService tableService;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -33,7 +32,6 @@ public class OrderOverviewActivity extends AppCompatActivity {
         allOrderedItemsRecyclerView = findViewById(R.id.allOrderedItems);
         tableService = new TableService(getSharedPreferences("TABLES", Context.MODE_PRIVATE));
         setupAllOrderedItems(allOrderedItemsRecyclerView);
-        System.out.println(tableService.getAllOrderItems());
     }
 
     //Kitchen Output
@@ -43,14 +41,11 @@ public class OrderOverviewActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(orderOverviewAdapter);
 
-        orderOverviewAdapter.setClickListener((v, position) -> onOrderedItemClick(v, orderOverviewAdapter.getItem(position)));
+        orderOverviewAdapter.setClickListener((v, position) -> onOrderedItemClick(orderOverviewAdapter.getItem(position)));
     }
 
-    private void onOrderedItemClick(View v, OrderItem orderItem) {
-        orderItem.setChecked(true);
+    private void onOrderedItemClick(OrderItem orderItem) {
         tableService.setChecked(orderItem.getId());
-        setupAllOrderedItems(allOrderedItemsRecyclerView);
-        //update view
         setupAllOrderedItems(allOrderedItemsRecyclerView);
     }
 

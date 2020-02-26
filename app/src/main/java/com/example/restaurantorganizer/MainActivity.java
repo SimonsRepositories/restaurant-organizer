@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -22,7 +21,6 @@ import com.example.restaurantorganizer.model.Seat;
 import com.example.restaurantorganizer.model.Table;
 import com.example.restaurantorganizer.service.TableService;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -32,8 +30,6 @@ public class MainActivity extends AppCompatActivity {
 
     private RecyclerView seatsLeftRecyclerView;
     private RecyclerView seatsRightRecyclerView;
-
-    private final List<Seat> seats = Arrays.asList(new Seat(1L, new ArrayList<>()), new Seat(2L,  new ArrayList<>()), new Seat(3L,  new ArrayList<>()), new Seat(4L,  new ArrayList<>()), new Seat(5L,  new ArrayList<>()));
 
     private Table scannedTable;
     private TableService tableService;
@@ -46,22 +42,16 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        System.out.println("on create");
-
         setContentView(R.layout.activity_main);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("");
 
         tableService = new TableService(getSharedPreferences("TABLES", MODE_PRIVATE));
         scannedTable = tableService.getTableById(1L);
 
-        System.out.println(scannedTable);
-
         tableHeader = findViewById(R.id.tableHeader);
         tableHeader.setText(scannedTable.getName());
-
 
         seatsLeftRecyclerView = findViewById(R.id.seatsLeft);
         seatsRightRecyclerView = findViewById(R.id.seatsRight);
@@ -116,8 +106,6 @@ public class MainActivity extends AppCompatActivity {
                 System.out.println(Arrays.toString(messages));
             }
         }
-
-
     }
 
     private void setupSeatRecyclerView(RecyclerView recyclerView, List<Seat> seats) {
@@ -125,11 +113,10 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(seatAdapter);
-        seatAdapter.setClickListener((v, position) -> onSeatClick(v, seatAdapter.getItem(position)));
+        seatAdapter.setClickListener((v, position) -> onSeatClick(seatAdapter.getItem(position)));
     }
 
-    private void onSeatClick(View v, Seat seat) {
-        seat.getId();
+    private void onSeatClick(Seat seat) {
         Intent intent = new Intent(this, MenuSelectionActivitiy.class);
         intent.putExtra("SEAT", scannedTable.getSeats().stream().filter(s -> s.getId() == seat.getId()).findFirst().orElse(null));
         intent.putExtra("TABLE_ID", scannedTable.getId());
