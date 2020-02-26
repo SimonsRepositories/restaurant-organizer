@@ -24,7 +24,6 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder>
     private LayoutInflater mInflater;
     private MenuAdapter.ItemClickListener mClickListener;
 
-    // data is passed into the constructor
     public MenuAdapter(Context context, List<Menu> data, List<OrderItem> orderItems) {
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
@@ -35,14 +34,12 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder>
         this.selectedOrderItems = orderItems;
     }
 
-    // inflates the row layout from xml when needed
     @Override
     public MenuAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = mInflater.inflate(R.layout.item_view, parent, false);
         return new MenuAdapter.ViewHolder(view);
     }
 
-    // binds the data to the TextView in each row
     @Override
     public void onBindViewHolder(MenuAdapter.ViewHolder holder, int position) {
         Menu item = mData.get(position);
@@ -55,14 +52,12 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder>
         }
     }
 
-    // total number of rows
     @Override
     public int getItemCount() {
         return mData.size();
     }
 
 
-    // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         View myitemView;
 
@@ -84,17 +79,14 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder>
         }
     }
 
-    // convenience method for getting data at click position
     public Menu getItem(int id) {
         return mData.get(id);
     }
 
-    // allows clicks events to be caught
     public void setClickListener(MenuAdapter.ItemClickListener itemClickListener) {
         this.mClickListener = itemClickListener;
     }
 
-    // parent activity will implement this method to respond to click events
     public interface ItemClickListener {
         void onItemClick(View view, int position);
     }

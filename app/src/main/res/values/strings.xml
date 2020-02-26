@@ -8,4 +8,6 @@
     <string name="cancel">Cancel</string>
     <string name="alertmsg">Shake detected! Are you sure you want to delete all orders from this person?</string>
     <string name="alerttitle">Unselect all orders</string>
+    <string name="item">item</string>
+    <string name="ingredients">ingredients</string>
 </resources>

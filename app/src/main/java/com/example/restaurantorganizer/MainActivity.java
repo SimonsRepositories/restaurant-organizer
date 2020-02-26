@@ -67,16 +67,12 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("");
 
         tableService = new TableService(getSharedPreferences("TABLES", MODE_PRIVATE));
         scannedTable = tableService.getTableById(1L);
 
-        System.out.println(scannedTable);
-
         tableHeader = findViewById(R.id.tableHeader);
         tableHeader.setText(scannedTable.getName());
-
 
         seatsLeftRecyclerView = findViewById(R.id.seatsLeft);
         seatsRightRecyclerView = findViewById(R.id.seatsRight);
@@ -297,11 +293,10 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(seatAdapter);
-        seatAdapter.setClickListener((v, position) -> onSeatClick(v, seatAdapter.getItem(position)));
+        seatAdapter.setClickListener((v, position) -> onSeatClick(seatAdapter.getItem(position)));
     }
 
-    private void onSeatClick(View v, Seat seat) {
-        seat.getId();
+    private void onSeatClick(Seat seat) {
         Intent intent = new Intent(this, MenuSelectionActivitiy.class);
         intent.putExtra("SEAT", scannedTable.getSeats().stream().filter(s -> s.getId() == seat.getId()).findFirst().orElse(null));
         intent.putExtra("TABLE_ID", scannedTable.getId());

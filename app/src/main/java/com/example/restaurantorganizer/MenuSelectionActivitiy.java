@@ -21,29 +21,20 @@ import com.example.restaurantorganizer.model.OrderItem;
 import com.example.restaurantorganizer.model.Seat;
 import com.example.restaurantorganizer.service.TableService;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class MenuSelectionActivitiy extends AppCompatActivity {
 
-    TableService tableService;
+    private TableService tableService;
 
     private SensorManager sm;
-    private float accelVal; //current acceleration value and gravity
-    private float accelLast;  //last acceleration value and gravity
-    private float shake;      //acceleration value differ from gravity
+    private float accelVal;     // current acceleration value and gravity
+    private float accelLast;    // last acceleration value and gravity
+    private float shake;        // acceleration value differ from gravity
 
-    Seat selectedSeat;
-    long tableId;
-
-    private final List<Menutype> menutypes = Arrays.asList(
-            new Menutype(1, "Meat", new ArrayList<>()),
-            new Menutype(2, "Fish", new ArrayList<>()),
-            new Menutype(3, "Pasta", new ArrayList<>()),
-            new Menutype(4, "Pizza", new ArrayList<>()),
-            new Menutype(5, "Drinks", new ArrayList<>())
-    );
+    private Seat selectedSeat;
+    private long tableId;
 
     private final List<Menu> pizzaItems = Arrays.asList(
             new Menu(6, "Napoli", "Sardellen"),
@@ -89,6 +80,14 @@ public class MenuSelectionActivitiy extends AppCompatActivity {
             new Menu(34, "Cannelloni", "Basilikum")
     );
 
+    private final List<Menutype> menutypes = Arrays.asList(
+            new Menutype(1, "Meat", meatItems),
+            new Menutype(2, "Fish", fishItems),
+            new Menutype(3, "Pasta", pastaItems),
+            new Menutype(4, "Pizza", pizzaItems),
+            new Menutype(5, "Drinks", drinkItems)
+    );
+
     private RecyclerView allMenuTypesRecyclerView;
     private RecyclerView allItemsRecyclerView;
 
@@ -100,12 +99,6 @@ public class MenuSelectionActivitiy extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.menu_view);
 
-        menutypes.get(0).setMenus(pizzaItems);
-        menutypes.get(1).setMenus(fishItems);
-        menutypes.get(2).setMenus(meatItems);
-        menutypes.get(3).setMenus(drinkItems);
-        menutypes.get(4).setMenus(pastaItems);
-
         selectedSeat = (Seat) getIntent().getSerializableExtra("SEAT");
         tableId = getIntent().getLongExtra("TABLE_ID", 0);
 
@@ -116,7 +109,6 @@ public class MenuSelectionActivitiy extends AppCompatActivity {
         setupItemRecyclerView(allItemsRecyclerView, pizzaItems);
 
         tableService = new TableService(getSharedPreferences("TABLES", Context.MODE_PRIVATE));
-
 
         //setting up sensors
         sm = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
@@ -186,24 +178,7 @@ public class MenuSelectionActivitiy extends AppCompatActivity {
     }
 
     private void onMenuTypeClick(View v, Menutype menutype) {
-
-        switch (menutype.getName()) {
-            case "Pizza":
-                setupItemRecyclerView(allItemsRecyclerView, pizzaItems);
-                break;
-            case "Pasta":
-                setupItemRecyclerView(allItemsRecyclerView, pastaItems);
-                break;
-            case "Meat":
-                setupItemRecyclerView(allItemsRecyclerView, meatItems);
-                break;
-            case "Fish":
-                setupItemRecyclerView(allItemsRecyclerView, fishItems);
-                break;
-            case "Drinks":
-                setupItemRecyclerView(allItemsRecyclerView, drinkItems);
-                break;
-        }
+        setupItemRecyclerView(allItemsRecyclerView, menutype.getMenus());
     }
 
     private void onItemClick(View v, Menu item) {

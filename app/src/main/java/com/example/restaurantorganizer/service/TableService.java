@@ -53,13 +53,6 @@ public class TableService {
         return getTables().stream().filter(table -> table.getId() == id).findFirst().orElse(null);
     }
 
-    public void updateTable(Table updateTable) {
-        Table table = getTableById(updateTable.getId());
-        table.setName(updateTable.getName());
-        table.setSeats(updateTable.getSeats());
-        writeTables();
-    }
-
     public void updateSeat(Seat updateSeat, long tableId) {
         Table table = getTableById(tableId);
         Seat seat = table.getSeats().stream().filter(s -> s.getId() == updateSeat.getId()).findFirst().orElse(null);
